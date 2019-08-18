@@ -1,0 +1,81 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="materialButtonStyle">@style/CustomMaterialButton</item>
+        <item name="imageButtonStyle">@style/CustomImageButton</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="textAppearanceHeadline1">@style/CustomHeadline1</item>
+        <item name="textAppearanceHeadline2">@style/CustomHeadline2</item>
+        <item name="textAppearanceHeadline3">@style/CustomHeadline3</item>
+        <item name="textAppearanceHeadline4">@style/CustomHeadline4</item>
+        <item name="textAppearanceHeadline5">@style/CustomHeadline5</item>
+        <item name="textAppearanceHeadline6">@style/CustomHeadline6</item>
+        <item name="textAppearanceBody1">@style/CustomBody1</item>
+        <item name="textAppearanceBody2">@style/CustomBody2</item>
+        <item name="textAppearanceSubtitle1">@style/CustomSubtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/CustomSubtitle2</item>
+        <item name="textAppearanceCaption">@style/CustomCaption</item>
+
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CustomMaterialButton" parent="Widget.MaterialComponents.Button" >
+        <item name="cornerRadius">32dp</item>
+    </style>
+
+    <style name="CustomImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:tint">@color/colorIconOnSurface</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="CustomHeadline1" parent="TextAppearance.MaterialComponents.Headline1">
+    </style>
+
+    <style name="CustomHeadline2" parent="TextAppearance.MaterialComponents.Headline2">
+    </style>
+
+    <style name="CustomHeadline3" parent="TextAppearance.MaterialComponents.Headline3">
+    </style>
+
+    <style name="CustomHeadline4" parent="TextAppearance.MaterialComponents.Headline4">
+    </style>
+
+    <style name="CustomHeadline5" parent="TextAppearance.MaterialComponents.Headline5">
+    </style>
+
+    <style name="CustomHeadline6" parent="TextAppearance.MaterialComponents.Headline6">
+    </style>
+
+    <style name="CustomBody1" parent="TextAppearance.MaterialComponents.Body1">
+    </style>
+
+    <style name="CustomBody2" parent="TextAppearance.MaterialComponents.Body2">
+    </style>
+
+    <style name="CustomSubtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+    </style>
+
+    <style name="CustomSubtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+    </style>
+
+    <style name="CustomCaption" parent="TextAppearance.MaterialComponents.Caption">
+    </style>
+
+</resources>
