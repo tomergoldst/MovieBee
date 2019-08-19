@@ -1,6 +1,8 @@
 # MovieBee
 Discover new movies
 
+<img src="https://user-images.githubusercontent.com/19874536/63298657-b4988980-c2dc-11e9-9639-43d989371146.png" width="180" height="360"/><img src="https://user-images.githubusercontent.com/19874536/63298665-bb270100-c2dc-11e9-9b13-49a86c02ba00.png" width="180" height="360"/>
+
 ## Tech stack
 * Kotlin
 * MVVM
