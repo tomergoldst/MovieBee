@@ -41,8 +41,6 @@ class MainViewModel(
     }
 
     private fun subscribeForData() {
-        Timber.d("subscribeForData")
-
         mCompositeDisposable.add(
             mPagination
                 .doOnNext { page -> Timber.d("page $page") }
@@ -56,10 +54,8 @@ class MainViewModel(
     }
 
     private fun updateData(movies: List<Movie>){
-        Timber.d("updateData")
-
         if (!movies.isNullOrEmpty()) {
-            mMoviesMap[mPage] = movies
+            mMoviesMap[movies[0].page] = movies
             _movies.value = getMoviesListFromMap()
 
         } else {

@@ -49,20 +49,12 @@ class Repository(
         return moviesLocalDataSource.favoriteMovie(id)
     }
 
-    override fun getFavoriteMoviesSync(page: Int): List<FavoriteMovie> {
-        return moviesLocalDataSource.getFavoriteMoviesSync(page)
-    }
-
     override fun unFavoriteMovie(id: Long): Completable {
         return moviesLocalDataSource.unFavoriteMovie(id)
     }
 
     override fun getFavoriteMovies(): Observable<List<FavoriteMovie>> {
         return moviesLocalDataSource.getFavoriteMovies()
-    }
-
-    override fun getFavoriteMovies(page: Int): Observable<List<FavoriteMovie>> {
-        return moviesLocalDataSource.getFavoriteMovies(page)
     }
 
     override fun getFavoriteMovie(id: Long): Observable<FavoriteMovie?> {

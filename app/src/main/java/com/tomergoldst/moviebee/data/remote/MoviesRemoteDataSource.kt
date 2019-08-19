@@ -22,7 +22,11 @@ class MoviesRemoteDataSource(private val moviesService: MoviesService) :
         queryParams[Constants.PARAM_PRIMARY_RELEASE_DATE_LTE] = calendarRemoteFormat
 
         return moviesService.discoverMovies(queryParams)
-            .map { r -> r.results }
+            .map { r ->
+                r.results.forEach { it.page = page }
+                r.results
+            }
+
     }
 
     override fun getMovieDetails(id: Long): Single<Movie> {

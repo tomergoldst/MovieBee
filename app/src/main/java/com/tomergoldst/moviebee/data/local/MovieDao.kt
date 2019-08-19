@@ -7,11 +7,11 @@ import io.reactivex.Observable
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM movie ORDER BY release_date DESC LIMIT :limit OFFSET :offset")
-    fun getAll(offset: Int, limit: Int): Observable<List<Movie>>
+    @Query("SELECT * FROM movie WHERE page = :page ORDER BY release_date DESC")
+    fun getAll(page: Int): Observable<List<Movie>>
 
-    @Query("SELECT * FROM movie ORDER BY release_date DESC LIMIT :limit OFFSET :offset")
-    fun getAllSync(offset: Int, limit: Int): List<Movie>
+    @Query("SELECT * FROM movie WHERE page = :page ORDER BY release_date DESC")
+    fun getAllSync(page: Int): List<Movie>
 
     @Query("SELECT * FROM movie WHERE id = :id")
     fun get(id: Long): Observable<Movie>

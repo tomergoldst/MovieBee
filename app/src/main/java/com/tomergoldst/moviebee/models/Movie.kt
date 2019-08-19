@@ -44,6 +44,10 @@ data class Movie(
 
     @SerializedName("popularity")
     @ColumnInfo(name = "popularity")
-    var popularity: Float
+    var popularity: Float,
+
+    @SerializedName("page")
+    @ColumnInfo(name = "page")
+    var page: Int
 
 )

@@ -19,10 +19,6 @@ interface RepositoryDataSource {
 
     fun getFavoriteMovies(): Observable<List<FavoriteMovie>>
 
-    fun getFavoriteMovies(page: Int): Observable<List<FavoriteMovie>>
-
-    fun getFavoriteMoviesSync(page: Int): List<FavoriteMovie>
-
     fun getFavoriteMovie(id: Long): Observable<FavoriteMovie?>
 
     fun clear()

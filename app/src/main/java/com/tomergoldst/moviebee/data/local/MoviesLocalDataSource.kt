@@ -1,6 +1,5 @@
 package com.tomergoldst.moviebee.data.local
 
-import com.tomergoldst.moviebee.data.remote.Constants
 import com.tomergoldst.moviebee.models.Movie
 import com.tomergoldst.moviebee.models.FavoriteMovie
 import io.reactivex.Completable
@@ -12,7 +11,7 @@ class MoviesLocalDataSource(
 ) : LocalDataSource {
 
     override fun getMovies(page: Int): Observable<List<Movie>> {
-        return movieDao.getAll((page - 1) * Constants.MOVIES_PER_PAGE, Constants.MOVIES_PER_PAGE)
+        return movieDao.getAll(page)
     }
 
     override fun saveMovies(movies: List<Movie>): Completable {
@@ -29,14 +28,6 @@ class MoviesLocalDataSource(
 
     override fun getFavoriteMovies(): Observable<List<FavoriteMovie>> {
         return favoriteMovieDao.getAll()
-    }
-
-    override fun getFavoriteMoviesSync(page: Int): List<FavoriteMovie> {
-        return favoriteMovieDao.getAllSync((page - 1) * Constants.MOVIES_PER_PAGE, Constants.MOVIES_PER_PAGE)
-    }
-
-    override fun getFavoriteMovies(page: Int): Observable<List<FavoriteMovie>> {
-        return favoriteMovieDao.getAll((page - 1) * Constants.MOVIES_PER_PAGE, Constants.MOVIES_PER_PAGE)
     }
 
     override fun favoriteMovie(id: Long): Completable {
