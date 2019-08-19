@@ -7,40 +7,39 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
+import androidx.core.view.doOnPreDraw
 import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import androidx.transition.Explode
 import com.tomergoldst.moviebee.app.GlideApp
 import com.tomergoldst.moviebee.data.remote.Constants
 import com.tomergoldst.moviebee.models.Movie
 import kotlinx.android.synthetic.main.fragment_movie_details.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
-import androidx.fragment.app.FragmentManager
+import androidx.transition.TransitionInflater
 import com.tomergoldst.moviebee.R
 
 
-class MovieDetailsFragment : BaseFragment(), FragmentManager.OnBackStackChangedListener {
+class MovieDetailsFragment : BaseFragment() {
 
     private val mModel by viewModel<MovieDetailsViewModel>()
 
     private var movieId: Long = -1
 
     companion object {
-        private const val ARG_MOVIE_ID = "ARG_MOVIE_ID"
-
-        fun newInstance(id: Long): MovieDetailsFragment {
-            val f = MovieDetailsFragment()
-            val args = Bundle()
-            args.putLong(ARG_MOVIE_ID, id)
-            f.arguments = args
-            return f
-        }
+        const val ARG_MOVIE_ID = "ARG_MOVIE_ID"
+        const val ARG_TRANSITION_NAME_POSTER_IMAGE = "ARG_TRANSITION_NAME_POSTER_IMAGE"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        enterTransition = Explode()
 
         movieId = arguments!!.getLong(ARG_MOVIE_ID)
         mModel.init(movieId)
@@ -48,22 +47,28 @@ class MovieDetailsFragment : BaseFragment(), FragmentManager.OnBackStackChangedL
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setToolbar(toolbar)
+
+        posterImv.transitionName = arguments!!.getString(ARG_TRANSITION_NAME_POSTER_IMAGE)
 
         favoriteImb.setOnClickListener {
             mModel.toggleFavoriteMovie()
         }
 
         mModel.movie.observe(viewLifecycleOwner, Observer { movie ->
-            movie?.let { bindMovie(movie)}
+            movie?.let { bindMovie(movie) }
         })
 
         mModel.isFavorite.observe(viewLifecycleOwner, Observer {
             bindFavorite(it)
         })
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
 
     }
 

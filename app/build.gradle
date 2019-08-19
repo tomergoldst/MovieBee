@@ -30,6 +30,7 @@ def glideVersion = "4.8.0"
 def rxJavaVersion = '2.2.10'
 def rxJavaAndroidVersion = '2.0.1'
 def koinVersion = '2.0.1'
+def navVersion = "2.1.0-rc01"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -75,4 +76,7 @@ dependencies {
 
     // Debug database
     debugImplementation "com.facebook.stetho:stetho:1.5.1"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navVersion"
 }

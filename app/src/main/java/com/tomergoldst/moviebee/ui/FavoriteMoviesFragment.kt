@@ -1,10 +1,14 @@
 package com.tomergoldst.moviebee.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tomergoldst.moviebee.R
 import com.tomergoldst.moviebee.extentions.dp2Px
@@ -19,16 +23,6 @@ class FavoriteMoviesFragment : BaseFragment(),
     private val mModel by viewModel<FavoriteMoviesViewModel>()
 
     private lateinit var mAdapter: MoviesPostersRecyclerListAdapter
-    private var mListener: OnFragmentInteraction? = null
-
-    companion object {
-        fun newInstance() = FavoriteMoviesFragment()
-    }
-
-    // Container Activity must implement this interface
-    interface OnFragmentInteraction {
-        fun onMovieClicked(movie: Movie, view: View)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_favorite_movies, container, false)
@@ -63,6 +57,9 @@ class FavoriteMoviesFragment : BaseFragment(),
                 emptyTxv.isVisible = false
             }
         })
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
     }
 
     private fun bindRecyclerView() {
@@ -78,16 +75,14 @@ class FavoriteMoviesFragment : BaseFragment(),
     }
 
     override fun onItemClicked(movie: Movie, view: View) {
-        mListener!!.onMovieClicked(movie, view)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mListener = context as? OnFragmentInteraction
-        if (mListener == null) {
-            throw ClassCastException("$context must implement OnFragmentInteraction")
-        }
-
+        val bundle = bundleOf(
+            MovieDetailsFragment.ARG_MOVIE_ID to movie.id,
+            MovieDetailsFragment.ARG_TRANSITION_NAME_POSTER_IMAGE to ViewCompat.getTransitionName(view)
+        )
+        val extras = FragmentNavigatorExtras(
+            view to ViewCompat.getTransitionName(view).toString()
+        )
+        findNavController().navigate(R.id.movieDetailsFragment, bundle, null, extras)
     }
 
 }

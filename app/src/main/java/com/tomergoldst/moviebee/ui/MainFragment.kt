@@ -1,11 +1,15 @@
 package com.tomergoldst.moviebee.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tomergoldst.moviebee.R
@@ -22,17 +26,6 @@ class MainFragment : Fragment(),
     private val mModel by viewModel<MainViewModel>()
 
     private lateinit var mAdapter: MoviesPostersRecyclerListAdapter
-    private var mListener: OnFragmentInteraction? = null
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
-    // Container Activity must implement this interface
-    interface OnFragmentInteraction {
-        fun onMovieClicked(movie: Movie, view: View)
-        fun onShowFavoritesMoviesClicked()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
@@ -59,7 +52,8 @@ class MainFragment : Fragment(),
         loadingViewGroup.visibility = View.VISIBLE
 
         favoriteMoviesBtn.setOnClickListener {
-            mListener?.onShowFavoritesMoviesClicked()
+            //mListener?.onShowFavoritesMoviesClicked()
+            findNavController().navigate(R.id.action_mainFragment_to_favoriteMoviesFragment2)
         }
 
         mModel.movies.observe(viewLifecycleOwner, Observer {
@@ -76,19 +70,20 @@ class MainFragment : Fragment(),
         mModel.error.observe(viewLifecycleOwner, Observer {
             errorTxv.isVisible = it == true
         })
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
     }
 
     override fun onItemClicked(movie: Movie, view: View) {
-        mListener!!.onMovieClicked(movie, view)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mListener = context as? OnFragmentInteraction
-        if (mListener == null) {
-            throw ClassCastException("$context must implement OnFragmentInteraction")
-        }
-
+        val bundle = bundleOf(
+            MovieDetailsFragment.ARG_MOVIE_ID to movie.id,
+            MovieDetailsFragment.ARG_TRANSITION_NAME_POSTER_IMAGE to ViewCompat.getTransitionName(view)
+        )
+        val extras = FragmentNavigatorExtras(
+            view to ViewCompat.getTransitionName(view).toString()
+        )
+        findNavController().navigate(R.id.action_mainFragment_to_movieDetailsFragment2, bundle, null, extras)
     }
 
 }
