@@ -6,7 +6,6 @@ import android.view.*
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.tomergoldst.moviebee.R
 import com.tomergoldst.moviebee.extentions.dp2Px
 import com.tomergoldst.moviebee.models.Movie
@@ -72,16 +71,8 @@ class FavoriteMoviesFragment : BaseFragment(),
         recyclerView.apply {
             // show different number of columns for different states
             val spanCount = if (UiUtils.isPortrait(context)) 3 else 5
-
             layoutManager = GridLayoutManager(context, spanCount)
             addItemDecoration(SimpleItemDecoration(context.dp2Px(4), context.dp2Px(8)))
-            addOnScrollListener(object : EndlessRecyclerViewScrollListener(
-                layoutManager as GridLayoutManager
-            ) {
-                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                    mModel.getMoreMovies()
-                }
-            })
             adapter = mAdapter
         }
     }
